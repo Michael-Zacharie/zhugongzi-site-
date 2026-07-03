@@ -1,182 +1,156 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="dark">
+<html lang="zh">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>朱哲豪 · AI数字开发</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{brand:{50:'#fff7ed',100:'#ffedd5',200:'#fed7aa',300:'#fdba74',400:'#fb923c',500:'#FF6B35',600:'#ea580c',700:'#c2410c',800:'#9a3412',900:'#7c2d12'}}}}}</script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<title>星辰粒子 · 互动宇宙</title>
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;background:#0a0a0f}
-body{font-family:'PingFang SC','Microsoft YaHei','Segoe UI',sans-serif;color:#e4e4e7;background:#0a0a0f;overflow-x:hidden}
-::selection{background:#FF6B35;color:#fff}
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:#0a0a0f}
-::-webkit-scrollbar-thumb{background:#FF6B35;border-radius:3px}
-/* 背景 */
-.bg-grid{background-image:radial-gradient(rgba(255,107,53,.03) 1px,transparent 1px);background-size:40px 40px}
-.bg-glow{position:fixed;pointer-events:none;z-index:0}
-.bg-glow-1{top:-20%;left:-10%;width:60%;height:60%;background:radial-gradient(ellipse,rgba(255,107,53,.04),transparent)}
-.bg-glow-2{bottom:-20%;right:-10%;width:50%;height:50%;background:radial-gradient(ellipse,rgba(100,100,255,.03),transparent)}
-/* 导航 */
-.nav-blur{backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(10,10,15,.85);border-bottom:1px solid rgba(255,255,255,.05)}
-/* 卡片 */
-.card-premium{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:24px;transition:all .4s cubic-bezier(.16,1,.3,1)}
-.card-premium:hover{background:rgba(255,255,255,.04);border-color:rgba(255,107,53,.2);transform:translateY(-4px);box-shadow:0 20px 60px rgba(255,107,53,.08)}
-/* 渐变文字 */
-.text-gradient{background:linear-gradient(135deg,#FF6B35,#ff9800,#FF6B35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-/* 按钮 */
-.btn-glow{position:relative;overflow:hidden}
-.btn-glow::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,.1),transparent);transform:translateX(-100%);transition:transform .6s}
-.btn-glow:hover::after{transform:translateX(100%)}
-/* 动画 */
-@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-@keyframes scaleIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
-.animate-fade-up{animation:fadeUp .6s ease-out forwards}
-.animate-scale-in{animation:scaleIn .4s ease-out forwards}
-.delay-100{animation-delay:.1s}.delay-200{animation-delay:.2s}.delay-300{animation-delay:.3s}.delay-400{animation-delay:.4s}
-/* 计数器 */
-.counter{font-variant-numeric:tabular-nums}
-/* 头像光环 */
-.avatar-ring{animation:spin 8s linear infinite}
-@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-/* 价格卡 */
-.pricing-popular{position:relative}
-.pricing-popular::before{content:'最受欢迎';position:absolute;top:-14px;right:20px;background:#FF6B35;color:#fff;font-size:12px;font-weight:bold;padding:4px 16px;border-radius:20px;z-index:1}
-@media(max-width:768px){.mobile-stack{flex-direction:column}}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;overflow:hidden;font-family:'PingFang SC','Microsoft YaHei',sans-serif;touch-action:none;-webkit-tap-highlight-color:transparent}
+canvas{display:block;position:fixed;top:0;left:0}
+.overlay{position:fixed;inset:0;pointer-events:none;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
+.title{font-size:clamp(40px,8vw,90px);font-weight:900;color:#fff;text-shadow:0 0 80px rgba(120,120,255,.6),0 0 160px rgba(200,100,255,.3);animation:titleGlow 3s ease-in-out infinite;letter-spacing:-1px}
+@keyframes titleGlow{0%,100%{text-shadow:0 0 60px rgba(120,120,255,.5),0 0 120px rgba(200,100,255,.25)}50%{text-shadow:0 0 100px rgba(120,120,255,.8),0 0 200px rgba(200,100,255,.5)}}
+.subtitle{font-size:clamp(16px,3vw,22px);color:rgba(255,255,255,.6);margin-top:12px;letter-spacing:4px;font-weight:300}
+.hint{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.35);font-size:14px;z-index:10;letter-spacing:2px;pointer-events:none;animation:hintPulse 2s ease-in-out infinite}
+@keyframes hintPulse{0%,100%{opacity:.3}50%{opacity:.7}}
 </style>
 </head>
-<body class="bg-grid">
-<div class="bg-glow bg-glow-1"></div><div class="bg-glow bg-glow-2"></div>
+<body>
+<canvas id=c></canvas>
+<div class=overlay>
+  <div class=title>星辰粒子</div>
+  <div class=subtitle>INTERACTIVE  UNIVERSE</div>
+</div>
+<div class=hint>移动手指 · 触碰星辰</div>
+<script>
+const C=document.getElementById('c'),ctx=C.getContext('2d')
+let W,H,mx=0,my=0,touch=false,particles=[],time=0
+function resize(){W=C.width=window.innerWidth;H=C.height=window.innerHeight}
+resize();window.addEventListener('resize',resize)
 
-<!-- 导航 -->
-<nav class="nav-blur sticky top-0 z-50 px-6 py-4 flex items-center justify-between">
-  <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center text-sm font-bold">朱</div><span class="font-bold text-lg">朱哲豪</span></div>
-  <div class="hidden md:flex items-center gap-8 text-sm text-zinc-400">
-    <a href="#services" class="hover:text-white transition">服务</a><a href="#works" class="hover:text-white transition">案例</a><a href="#process" class="hover:text-white transition">流程</a><a href="#pricing" class="hover:text-white transition">价格</a><a href="#faq" class="hover:text-white transition">FAQ</a>
-  </div>
-  <a href="#contact" class="bg-brand-500 hover:bg-brand-600 text-white font-bold px-5 py-2.5 rounded-full text-sm transition">免费咨询</a>
-</nav>
+class Particle{
+  constructor(){
+    this.reset()
+    this.y=Math.random()*H
+  }
+  reset(){
+    this.x=Math.random()*W;this.y=-20
+    this.size=Math.random()*2.5+.5
+    this.speed=.3+Math.random()*1.5
+    this.opacity=.3+Math.random()*.7
+    this.hue=200+Math.random()*160 // blue to pink range
+    this.wobble=Math.random()*Math.PI*2
+    this.wobbleSpeed=.01+Math.random()*.03
+  }
+  update(){
+    this.y+=this.speed
+    this.wobble+=this.wobbleSpeed
+    this.x+=Math.sin(this.wobble)*.3
+    // 鼠标吸引
+    if(touch||mx){
+      let dx=mx-this.x,dy=my-this.y,dist=Math.sqrt(dx*dx+dy*dy)
+      if(dist<200){
+        let force=(200-dist)/200
+        this.x+=dx*force*.03
+        this.y+=dy*force*.03
+        this.opacity=Math.min(1,this.opacity+.02)
+        this.size=Math.min(4,this.size+.05)
+      }
+    }
+    if(this.y>H+20)this.reset()
+    if(this.x<-20)this.x=W+20
+    if(this.x>W+20)this.x=-20
+  }
+  draw(){
+    ctx.beginPath()
+    ctx.arc(this.x,this.y,this.size,0,Math.PI*2)
+    ctx.fillStyle=`hsla(${this.hue},80%,70%,${this.opacity})`
+    ctx.fill()
+    // 发光
+    if(this.opacity>.6){
+      ctx.beginPath()
+      ctx.arc(this.x,this.y,this.size*2.5,0,Math.PI*2)
+      ctx.fillStyle=`hsla(${this.hue},80%,70%,${this.opacity*.15})`
+      ctx.fill()
+    }
+  }
+}
 
-<!-- Hero -->
-<section class="relative min-h-screen flex items-center px-6">
-  <div class="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
-    <div>
-      <div class="inline-flex items-center gap-2 bg-brand-500/10 text-brand-500 text-sm font-bold px-4 py-2 rounded-full mb-6">
-        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span> 接单中 · 本周可排期
-      </div>
-      <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-6">
-        用<span class="text-gradient">AI</span><br/>把你的想法<br/>变成现实
-      </h1>
-      <p class="text-zinc-400 text-lg md:text-xl mb-8 leading-relaxed max-w-lg">
-        我是朱哲豪，专注用AI技术帮创业者、小商家、个人品牌<br class="hidden md:block"/>快速做出网站和小程序。<span class="text-white font-bold">快、便宜、不满意退款。</span>
-      </p>
-      <div class="flex items-center gap-4 flex-wrap">
-        <a href="#pricing" class="btn-glow bg-brand-500 hover:bg-brand-600 text-white font-bold px-8 py-4 rounded-full text-lg transition shadow-xl shadow-brand-500/20 inline-block">查看报价</a>
-        <a href="#contact" class="border-2 border-zinc-700 hover:border-brand-500 text-zinc-300 font-bold px-8 py-4 rounded-full text-lg transition inline-block">加微信聊</a>
-      </div>
-      <div class="flex items-center gap-6 mt-8 text-sm text-zinc-500">
-        <div class="flex items-center gap-1.5"><span class="text-green-400">★</span> 5.0 好评</div>
-        <div class="flex items-center gap-1.5">⚡ 1-5天交付</div>
-        <div class="flex items-center gap-1.5">🛡️ 售后维护</div>
-      </div>
-    </div>
-    <div class="flex justify-center">
-      <div class="relative">
-        <svg class="avatar-ring absolute -inset-8 w-[calc(100%+64px)] h-[calc(100%+64px)]" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="none" stroke="rgba(255,107,53,.15)" stroke-width="1" stroke-dasharray="8 4"/></svg>
-        <div class="w-64 h-64 md:w-80 md:h-80 rounded-3xl bg-gradient-to-br from-brand-500/20 to-brand-700/30 border border-white/10 flex items-center justify-center overflow-hidden">
-          <div class="text-8xl md:text-9xl filter drop-shadow-2xl">😎</div>
-        </div>
-        <div class="absolute -bottom-4 -right-4 bg-zinc-900 border border-white/10 rounded-2xl px-5 py-3 shadow-2xl animate-scale-in delay-400">
-          <div class="text-xs text-zinc-500">本周已完成</div>
-          <div class="text-2xl font-bold text-brand-500 counter">3<span class="text-sm text-zinc-400"> 个项目</span></div>
-        </div>
-        <div class="absolute -top-4 -left-4 bg-zinc-900 border border-white/10 rounded-2xl px-5 py-3 shadow-2xl animate-scale-in delay-200">
-          <div class="text-xs text-zinc-500">服务客户</div>
-          <div class="text-2xl font-bold text-white counter">10<span class="text-sm text-zinc-400">+ 位</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+// 连接线
+class Connection{
+  constructor(a,b){this.a=a;this.b=b}
+  draw(){
+    let dx=this.a.x-this.b.x,dy=this.a.y-this.b.y
+    let dist=Math.sqrt(dx*dx+dy*dy)
+    if(dist<100){
+      ctx.beginPath()
+      ctx.moveTo(this.a.x,this.a.y)
+      ctx.lineTo(this.b.x,this.b.y)
+      let alpha=(100-dist)/100*.15
+      ctx.strokeStyle=`rgba(150,180,255,${alpha})`
+      ctx.lineWidth=.5
+      ctx.stroke()
+    }
+  }
+}
 
-<!-- 服务 -->
-<section id="services" class="py-24 px-6 max-w-6xl mx-auto">
-  <div class="text-center mb-16"><h2 class="text-4xl md:text-5xl font-bold mb-4">我能帮你做什么</h2><p class="text-zinc-500 text-lg">三种服务，覆盖你90%的需求</p></div>
-  <div class="grid md:grid-cols-3 gap-6">
-    <div class="card-premium p-8"><div class="w-14 h-14 rounded-2xl bg-brand-500/10 flex items-center justify-center text-2xl mb-6">🌐</div><h3 class="text-xl font-bold mb-3">网站开发</h3><p class="text-zinc-400 text-sm leading-relaxed mb-4">个人品牌站 · 企业官网 · 产品落地页 · 博客 · 作品集</p><ul class="text-sm text-zinc-500 space-y-2"><li>· 响应式设计，手机电脑都好看</li><li>· SEO优化，搜索引擎能搜到你</li><li>· 免费部署 + 域名绑定</li></ul></div>
-    <div class="card-premium p-8"><div class="w-14 h-14 rounded-2xl bg-brand-500/10 flex items-center justify-center text-2xl mb-6">📱</div><h3 class="text-xl font-bold mb-3">小程序开发</h3><p class="text-zinc-400 text-sm leading-relaxed mb-4">展示类 · 工具类 · 互动游戏 · 电商 · 社区</p><ul class="text-sm text-zinc-500 space-y-2"><li>· 帮你注册 + 审核 + 上架全包</li><li>· 微信支付接入</li><li>· 流畅体验，不卡顿</li></ul></div>
-    <div class="card-premium p-8"><div class="w-14 h-14 rounded-2xl bg-brand-500/10 flex items-center justify-center text-2xl mb-6">🤖</div><h3 class="text-xl font-bold mb-3">AI功能定制</h3><p class="text-zinc-400 text-sm leading-relaxed mb-4">AI客服 · 内容生成 · 数据分析 · 自动化流程</p><ul class="text-sm text-zinc-500 space-y-2"><li>· 对接GPT/Claude等大模型</li><li>· 智能问答、自动回复</li><li>· 自定义AI工作流</li></ul></div>
-  </div>
-</section>
+// 大星光点
+class Star{
+  constructor(){
+    this.x=Math.random()*W
+    this.y=Math.random()*H
+    this.size=1+Math.random()*2
+    this.twinkle=Math.random()*Math.PI*2
+    this.speed=.02+Math.random()*.05
+  }
+  draw(){
+    this.twinkle+=this.speed
+    let alpha=.3+Math.sin(this.twinkle)*.3
+    ctx.beginPath()
+    ctx.arc(this.x,this.y,this.size,0,Math.PI*2)
+    ctx.fillStyle=`rgba(255,255,255,${alpha})`
+    ctx.fill()
+  }
+}
 
-<!-- 案例 -->
-<section id="works" class="py-24 px-6 max-w-6xl mx-auto">
-  <div class="text-center mb-16"><h2 class="text-4xl md:text-5xl font-bold mb-4">近期作品</h2><p class="text-zinc-500 text-lg">每一个都是认真交付的</p></div>
-  <div class="grid md:grid-cols-2 gap-6">
-    <a href="https://michael-zacharie.github.io/-meituan-app/" target="_blank" class="card-premium overflow-hidden group cursor-pointer block">
-      <div class="h-56 bg-gradient-to-br from-orange-600 via-red-500 to-amber-500 flex items-center justify-center relative overflow-hidden">
-        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition"></div>
-        <span class="text-7xl relative z-10 group-hover:scale-110 transition-transform duration-500">🍽️</span>
-        <div class="absolute top-4 left-4 bg-black/50 backdrop-blur text-white text-xs px-3 py-1.5 rounded-full">网站</div>
-      </div>
-      <div class="p-6"><h3 class="text-lg font-bold mb-1">朱公子的餐厅</h3><p class="text-zinc-500 text-sm">美食外卖网站 · 8家商家61道菜 · 独立菜品图片 · 深色模式 · 动画交互</p><div class="flex gap-2 mt-3"><span class="text-xs bg-zinc-800 text-zinc-400 px-2 py-1 rounded">Tailwind CSS</span><span class="text-xs bg-zinc-800 text-zinc-400 px-2 py-1 rounded">纯前端</span><span class="text-xs bg-zinc-800 text-zinc-400 px-2 py-1 rounded">GitHub Pages</span></div></div>
-    </a>
-    <div class="card-premium overflow-hidden group">
-      <div class="h-56 bg-gradient-to-br from-purple-700 via-indigo-600 to-violet-500 flex items-center justify-center relative overflow-hidden">
-        <div class="absolute inset-0 bg-black/20"></div>
-        <span class="text-7xl relative z-10 group-hover:scale-110 transition-transform duration-500">🐉</span>
-        <div class="absolute top-4 left-4 bg-black/50 backdrop-blur text-white text-xs px-3 py-1.5 rounded-full">小程序</div>
-      </div>
-      <div class="p-6"><h3 class="text-lg font-bold mb-1">山海神兽录</h3><p class="text-zinc-500 text-sm">养成对战小程序 · 12元素8种族 · 30+技能 · 赛博朋克风格 · 回合制战斗</p><div class="flex gap-2 mt-3"><span class="text-xs bg-zinc-800 text-zinc-400 px-2 py-1 rounded">微信小程序</span><span class="text-xs bg-zinc-800 text-zinc-400 px-2 py-1 rounded">Canvas精灵</span><span class="text-xs bg-zinc-800 text-zinc-400 px-2 py-1 rounded">云开发</span></div></div>
-    </div>
-  </div>
-</section>
+for(let i=0;i<200;i++)particles.push(new Particle())
+let stars=[];for(let i=0;i<80;i++)stars.push(new Star())
 
-<!-- 流程 -->
-<section id="process" class="py-24 px-6 max-w-4xl mx-auto">
-  <div class="text-center mb-16"><h2 class="text-4xl font-bold mb-4">怎么合作</h2><p class="text-zinc-500">四步，简单直接</p></div>
-  <div class="grid grid-cols-4 gap-4 text-center">
-    <div class="card-premium p-6"><div class="w-12 h-12 rounded-full bg-brand-500/10 flex items-center justify-center text-xl font-bold text-brand-500 mx-auto mb-4">1</div><h4 class="font-bold mb-2">聊需求</h4><p class="text-zinc-500 text-sm">加微信告诉我你想要什么</p></div>
-    <div class="card-premium p-6"><div class="w-12 h-12 rounded-full bg-brand-500/10 flex items-center justify-center text-xl font-bold text-brand-500 mx-auto mb-4">2</div><h4 class="font-bold mb-2">定方案</h4><p class="text-zinc-500 text-sm">我出方案和报价，你确认</p></div>
-    <div class="card-premium p-6"><div class="w-12 h-12 rounded-full bg-brand-500/10 flex items-center justify-center text-xl font-bold text-brand-500 mx-auto mb-4">3</div><h4 class="font-bold mb-2">开发交付</h4><p class="text-zinc-500 text-sm">1-5天做完给你看</p></div>
-    <div class="card-premium p-6"><div class="w-12 h-12 rounded-full bg-brand-500/10 flex items-center justify-center text-xl font-bold text-brand-500 mx-auto mb-4">4</div><h4 class="font-bold mb-2">满意收尾</h4><p class="text-zinc-500 text-sm">改到你满意为止</p></div>
-  </div>
-</section>
+function animate(){
+  ctx.fillStyle='rgba(0,0,0,.15)'
+  ctx.fillRect(0,0,W,H)
+  time++
+  stars.forEach(s=>s.draw())
+  particles.forEach(p=>{p.update();p.draw()})
+  // 连线
+  for(let i=0;i<particles.length;i+=3){
+    for(let j=i+1;j<Math.min(i+8,particles.length);j++){
+      new Connection(particles[i],particles[j]).draw()
+    }
+  }
+  // 鼠标周围粒子爆发
+  if(touch&&time%3===0){
+    for(let i=0;i<3;i++){
+      let p=new Particle()
+      p.x=mx+(Math.random()-.5)*40
+      p.y=my+(Math.random()-.5)*40
+      p.size=2+Math.random()*3
+      p.opacity=1
+      p.hue=260+Math.random()*100
+      particles.push(p)
+    }
+    if(particles.length>400)particles.splice(0,particles.length-400)
+  }
+  requestAnimationFrame(animate)
+}
 
-<!-- 价格 -->
-<section id="pricing" class="py-24 px-6 max-w-6xl mx-auto">
-  <div class="text-center mb-16"><h2 class="text-4xl md:text-5xl font-bold mb-4">透明定价</h2><p class="text-zinc-500 text-lg">没有套路，没有隐形收费</p></div>
-  <div class="grid md:grid-cols-3 gap-6 items-start">
-    <div class="card-premium p-8"><div class="text-3xl mb-4">🌐</div><h3 class="text-xl font-bold mb-1">展示型网站</h3><p class="text-3xl font-extrabold text-white my-4">¥200<span class="text-base font-normal text-zinc-500"> 起</span></p><p class="text-zinc-500 text-sm mb-6">个人品牌 · 企业官网 · 产品落地页</p><ul class="text-sm text-zinc-400 space-y-3 mb-6"><li>✓ 精美UI设计</li><li>✓ 移动端 + 电脑端</li><li>✓ 3-5个页面</li><li>✓ 联系表单</li><li>✓ 免费部署上线</li><li>✓ 1-2天交付</li></ul></div>
-    <div class="card-premium p-8 pricing-popular border-brand-500/30"><div class="text-3xl mb-4">📱</div><h3 class="text-xl font-bold mb-1">微信小程序</h3><p class="text-3xl font-extrabold text-white my-4">¥500<span class="text-base font-normal text-zinc-500"> 起</span></p><p class="text-zinc-500 text-sm mb-6">展示类 · 工具类 · 简单游戏</p><ul class="text-sm text-zinc-400 space-y-3 mb-6"><li>✓ 精美UI设计</li><li>✓ 注册审核全包</li><li>✓ 5-8个页面</li><li>✓ 微信支付接入</li><li>✓ 上架全程代办</li><li>✓ 3-5天交付</li></ul></div>
-    <div class="card-premium p-8"><div class="text-3xl mb-4">🤖</div><h3 class="text-xl font-bold mb-1">AI功能定制</h3><p class="text-3xl font-extrabold text-white my-4">¥1000<span class="text-base font-normal text-zinc-500"> 起</span></p><p class="text-zinc-500 text-sm mb-6">AI对话 · 内容生成 · 智能分析</p><ul class="text-sm text-zinc-400 space-y-3 mb-6"><li>✓ 以上全部功能</li><li>✓ AI模型对接</li><li>✓ 自定义AI功能</li><li>✓ 数据分析面板</li><li>✓ API集成</li><li>✓ 5-7天交付</li></ul></div>
-  </div>
-</section>
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY})
+document.addEventListener('touchmove',e=>{e.preventDefault();mx=e.touches[0].clientX;my=e.touches[0].clientY;touch=true},{passive:false})
+document.addEventListener('touchstart',e=>{mx=e.touches[0].clientX;my=e.touches[0].clientY;touch=true})
+document.addEventListener('touchend',()=>{touch=false})
+document.addEventListener('mouseleave',()=>{mx=0;my=0})
 
-<!-- FAQ -->
-<section id="faq" class="py-24 px-6 max-w-3xl mx-auto">
-  <div class="text-center mb-16"><h2 class="text-4xl font-bold mb-4">常见问题</h2></div>
-  <div class="space-y-4">
-    <div class="card-premium p-6"><h4 class="font-bold mb-2">完全不懂技术能找你做吗？</h4><p class="text-zinc-500 text-sm">能。你只需要告诉我想要什么，剩下的我来。从设计到上线全包。</p></div>
-    <div class="card-premium p-6"><h4 class="font-bold mb-2">不满意怎么办？</h4><p class="text-zinc-500 text-sm">全额退款。我提供无限次修改，做到你满意为止。你不满意，我不收钱。</p></div>
-    <div class="card-premium p-6"><h4 class="font-bold mb-2">交付后还能改吗？</h4><p class="text-zinc-500 text-sm">1个月内免费小改。后续修改按量收费，但老客户都有折扣。</p></div>
-    <div class="card-premium p-6"><h4 class="font-bold mb-2">能开发票吗？</h4><p class="text-zinc-500 text-sm">个人接单暂不支持发票，但可签电子合同保障你的权益。</p></div>
-  </div>
-</section>
-
-<!-- 联系 -->
-<section id="contact" class="py-24 px-6 text-center">
-  <h2 class="text-4xl md:text-5xl font-bold mb-6">准备好开始了吗？</h2>
-  <p class="text-zinc-500 text-lg mb-10 max-w-xl mx-auto">扫码加我微信，免费聊聊你的想法。<br/>不收费，不推销，纯聊聊。</p>
-  <div class="w-44 h-44 bg-white rounded-3xl mx-auto mb-6 flex items-center justify-center shadow-2xl"><span class="text-6xl">📱</span></div>
-  <p class="text-zinc-500 text-sm mb-2">微信号：扫码添加</p>
-  <p class="text-zinc-600 text-sm">或抖音私信：Michael Zacharie</p>
-</section>
-
-<footer class="border-t border-white/5 py-8 text-center text-zinc-600 text-sm">
-  © 2026 朱哲豪 · AI驱动数字开发 · 不满意不收钱
-</footer>
+animate()
+</script>
 </body>
 </html>
