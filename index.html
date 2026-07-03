@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>朱公子 · AI网站定制开发</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class',theme:{extend:{colors:{brand:'#FF6B35'}}}}</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'PingFang SC','Microsoft YaHei',sans-serif}
+html{scroll-behavior:smooth}
+body{background:#050510;color:#e0e0e0}
+.hero-gradient{background:radial-gradient(ellipse at 50% 0%,rgba(255,107,53,.15),transparent 60%)}
+.card-hover{transition:transform .3s ease,box-shadow .3s ease}
+.card-hover:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(255,107,53,.15)}
+.glow-text{text-shadow:0 0 40px rgba(255,107,53,.4)}
+.price-card{position:relative;overflow:hidden}
+.price-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#FF6B35,transparent)}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.float{animation:float 4s ease-in-out infinite}
+</style>
+</head>
+<body>
+<!-- Hero -->
+<section class="hero-gradient min-h-screen flex flex-col items-center justify-center text-center px-4">
+  <div class="float mb-8">
+    <div class="w-32 h-32 rounded-full bg-gradient-to-br from-brand to-orange-400 flex items-center justify-center text-6xl shadow-2xl shadow-brand/20">😎</div>
+  </div>
+  <h1 class="text-5xl md:text-7xl font-bold mb-4">朱公子</h1>
+  <p class="text-2xl md:text-3xl text-brand font-bold mb-2 glow-text">AI 网站 & 小程序定制开发</p>
+  <p class="text-gray-400 text-lg mb-8 max-w-2xl">用AI技术帮你快速做出想要的网站/小程序<br/>价格实惠 · 交付快 · 不满意不收钱</p>
+  <div class="flex gap-4 flex-wrap justify-center">
+    <a href="#pricing" class="bg-brand text-white font-bold px-8 py-4 rounded-full text-lg hover:bg-orange-500 transition">💰 查看价格</a>
+    <a href="#contact" class="border-2 border-brand text-brand font-bold px-8 py-4 rounded-full text-lg hover:bg-brand/10 transition">📱 联系我</a>
+  </div>
+  <div class="mt-16 grid grid-cols-3 gap-8 text-center text-gray-400 text-sm">
+    <div><div class="text-3xl mb-2">⚡</div>AI辅助开发<br/>效率翻倍</div>
+    <div><div class="text-3xl mb-2">🛡️</div>交付后维护<br/>售后无忧</div>
+    <div><div class="text-3xl mb-2">💯</div>不满意<br/>全额退款</div>
+  </div>
+</section>
+
+<!-- 服务项目 -->
+<section id="pricing" class="py-20 px-4 max-w-6xl mx-auto">
+  <h2 class="text-4xl font-bold text-center mb-4">服务项目</h2>
+  <p class="text-gray-400 text-center mb-12">明码标价，没有隐形消费</p>
+  <div class="grid md:grid-cols-3 gap-6">
+    <!-- 基础 -->
+    <div class="price-card card-hover bg-white/5 backdrop-blur rounded-2xl p-8 border border-white/10">
+      <div class="text-4xl mb-4">🌐</div>
+      <h3 class="text-xl font-bold mb-2">个人/企业展示站</h3>
+      <p class="text-gray-400 text-sm mb-4">品牌展示、作品集、公司官网</p>
+      <div class="text-4xl font-bold text-brand mb-2">¥200<span class="text-lg text-gray-400">起</span></div>
+      <p class="text-gray-500 text-xs mb-6">响应式设计 · SEO优化 · 1-2天交付</p>
+      <ul class="text-sm text-gray-400 space-y-2 mb-6">
+        <li>✅ 精美现代设计</li><li>✅ 移动端适配</li><li>✅ 联系表单</li><li>✅ 免费部署上线</li>
+      </ul>
+    </div>
+    <!-- 进阶 -->
+    <div class="price-card card-hover bg-white/5 backdrop-blur rounded-2xl p-8 border-2 border-brand relative">
+      <div class="absolute -top-3 right-4 bg-brand text-white text-xs px-3 py-1 rounded-full font-bold">最受欢迎</div>
+      <div class="text-4xl mb-4">📱</div>
+      <h3 class="text-xl font-bold mb-2">微信小程序</h3>
+      <p class="text-gray-400 text-sm mb-4">展示类/工具类/简单游戏</p>
+      <div class="text-4xl font-bold text-brand mb-2">¥500<span class="text-lg text-gray-400">起</span></div>
+      <p class="text-gray-500 text-xs mb-6">从注册到上架 · 全程代办 · 3-5天交付</p>
+      <ul class="text-sm text-gray-400 space-y-2 mb-6">
+        <li>✅ 帮注册+审核</li><li>✅ 全套页面设计</li><li>✅ 微信支付接入</li><li>✅ 上架全程代办</li>
+      </ul>
+    </div>
+    <!-- 高级 -->
+    <div class="price-card card-hover bg-white/5 backdrop-blur rounded-2xl p-8 border border-white/10">
+      <div class="text-4xl mb-4">🤖</div>
+      <h3 class="text-xl font-bold mb-2">AI功能定制</h3>
+      <p class="text-gray-400 text-sm mb-4">AI聊天/内容生成/智能分析</p>
+      <div class="text-4xl font-bold text-brand mb-2">¥1000<span class="text-lg text-gray-400">起</span></div>
+      <p class="text-gray-500 text-xs mb-6">对接AI接口 · 自定义功能 · 5-7天交付</p>
+      <ul class="text-sm text-gray-400 space-y-2 mb-6">
+        <li>✅ AI对话功能</li><li>✅ 内容自动生成</li><li>✅ 数据分析面板</li><li>✅ API对接+部署</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 作品案例 -->
+<section class="py-20 px-4 max-w-6xl mx-auto">
+  <h2 class="text-4xl font-bold text-center mb-4">案例展示</h2>
+  <p class="text-gray-400 text-center mb-12">真实项目，点击可预览</p>
+  <div class="grid md:grid-cols-2 gap-6">
+    <a href="https://michael-zacharie.github.io/-meituan-app/" target="_blank" class="card-hover bg-white/5 backdrop-blur rounded-2xl overflow-hidden border border-white/10 block">
+      <div class="h-48 bg-gradient-to-br from-orange-600 to-red-500 flex items-center justify-center text-6xl">🍽️</div>
+      <div class="p-6"><h3 class="text-xl font-bold mb-1">朱公子的餐厅</h3><p class="text-gray-400 text-sm">美食订餐网站 · 61道菜品 · AI图片 · 动画效果</p></div>
+    </a>
+    <div class="card-hover bg-white/5 backdrop-blur rounded-2xl overflow-hidden border border-white/10">
+      <div class="h-48 bg-gradient-to-br from-purple-600 to-indigo-500 flex items-center justify-center text-6xl">🐉</div>
+      <div class="p-6"><h3 class="text-xl font-bold mb-1">山海神兽录</h3><p class="text-gray-400 text-sm">微信小程序 · 养成对战 · 赛博朋克风格 · 赛尔号式战斗</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 流程 -->
+<section class="py-20 px-4 max-w-4xl mx-auto">
+  <h2 class="text-4xl font-bold text-center mb-12">合作流程</h2>
+  <div class="grid grid-cols-4 gap-4 text-center">
+    <div><div class="text-4xl mb-3">💬</div><div class="font-bold mb-1">1. 沟通需求</div><div class="text-gray-500 text-sm">告诉我你想要什么</div></div>
+    <div><div class="text-4xl mb-3">📝</div><div class="font-bold mb-1">2. 确认报价</div><div class="text-gray-500 text-sm">没问题就开工</div></div>
+    <div><div class="text-4xl mb-3">🚀</div><div class="font-bold mb-1">3. 快速交付</div><div class="text-gray-500 text-sm">1-5天给你看成果</div></div>
+    <div><div class="text-4xl mb-3">✅</div><div class="font-bold mb-1">4. 满意收尾</div><div class="text-gray-500 text-sm">修改到你满意为止</div></div>
+  </div>
+</section>
+
+<!-- 联系 -->
+<section id="contact" class="py-20 px-4 max-w-2xl mx-auto text-center">
+  <h2 class="text-4xl font-bold mb-4">联系我</h2>
+  <p class="text-gray-400 mb-8">扫码加微信，免费咨询报价</p>
+  <div class="w-48 h-48 bg-white rounded-2xl mx-auto mb-4 flex items-center justify-center text-6xl">📱</div>
+  <p class="text-gray-500 text-sm mb-2">微信号：扫码添加</p>
+  <p class="text-gray-500 text-sm">或直接抖音私信：Michael Zacharie</p>
+</section>
+
+<footer class="text-center py-8 text-gray-600 text-sm border-t border-white/5">
+  朱公子 © 2026 · AI驱动开发 · 不满意不收钱
+</footer>
+</body>
+</html>
